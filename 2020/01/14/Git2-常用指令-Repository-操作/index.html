@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="複習上次git init → git add . → git commit -m”write your commit” git status 查資料狀態 建 GitHub repository remote 到本地端資料夾如果想確認是否有連接到遠端資料夾，可以開啟 config 檔查看是否有 remote 常用環境設定縮寫篇 1234$ git config --global alias.co c">
+<meta name="keywords" content="Git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git2- 常用指令(Repository 操作)">
+<meta property="og:url" content="https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/index.html">
+<meta property="og:site_name" content="Yun&#39;s Blog">
+<meta property="og:description" content="複習上次git init → git add . → git commit -m”write your commit” git status 查資料狀態 建 GitHub repository remote 到本地端資料夾如果想確認是否有連接到遠端資料夾，可以開啟 config 檔查看是否有 remote 常用環境設定縮寫篇 1234$ git config --global alias.co c">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://quip.com/-/blob/CWIAAAgYWgU/FCUv6ZFUeX3MstfMhB4EEA?s=GL4gAFIc2KdI">
+<meta property="og:updated_time" content="2020-02-24T09:30:29.927Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git2- 常用指令(Repository 操作)">
+<meta name="twitter:description" content="複習上次git init → git add . → git commit -m”write your commit” git status 查資料狀態 建 GitHub repository remote 到本地端資料夾如果想確認是否有連接到遠端資料夾，可以開啟 config 檔查看是否有 remote 常用環境設定縮寫篇 1234$ git config --global alias.co c">
+<meta name="twitter:image" content="https://quip.com/-/blob/CWIAAAgYWgU/FCUv6ZFUeX3MstfMhB4EEA?s=GL4gAFIc2KdI">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/yunhsu.github.io/images/title.JPG">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/yunhsu.github.io/images/title.JPG" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/yunhsu.github.io/images/title.JPG">
+          
+        
+    
+    <!-- title -->
+    <title>Git2- 常用指令(Repository 操作)</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/yunhsu.github.io/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/yunhsu.github.io/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/yunhsu.github.io/">Home</a></li>
+         
+          <li><a href="/yunhsu.github.io/about/">About</a></li>
+         
+          <li><a href="/yunhsu.github.io/archives/">Writing</a></li>
+         
+          <li><a href="/yunhsu.github.io/tags/">tags</a></li>
+         
+          <li><a href="/yunhsu.github.io/categories/">categories</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/yunhsu.github.io/2020/01/22/Git3-分支/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/yunhsu.github.io/2019/12/22/Git1- 環境建立與基本指令/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/&text=Git2- 常用指令(Repository 操作)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/&title=Git2- 常用指令(Repository 操作)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/&is_video=false&description=Git2- 常用指令(Repository 操作)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git2- 常用指令(Repository 操作)&body=Check out this article: https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/&title=Git2- 常用指令(Repository 操作)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/&title=Git2- 常用指令(Repository 操作)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/&title=Git2- 常用指令(Repository 操作)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/&title=Git2- 常用指令(Repository 操作)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/&name=Git2- 常用指令(Repository 操作)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#複習上次"><span class="toc-number">1.</span> <span class="toc-text">複習上次</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用環境設定"><span class="toc-number">2.</span> <span class="toc-text">常用環境設定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#熱門遠端儲存庫-Github-VS-Bitbucket-VS-Gitlab"><span class="toc-number">3.</span> <span class="toc-text">熱門遠端儲存庫(Github VS Bitbucket VS Gitlab)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遠端儲存庫-Repository-操作"><span class="toc-number">4.</span> <span class="toc-text">遠端儲存庫(Repository)操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-版本細節"><span class="toc-number">5.</span> <span class="toc-text">Git 版本細節</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#還原技巧"><span class="toc-number">6.</span> <span class="toc-text">還原技巧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#資料來源"><span class="toc-number">7.</span> <span class="toc-text">資料來源</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Git2- 常用指令(Repository 操作)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Yun's Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-01-13T16:00:00.000Z" itemprop="datePublished">2020-01-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/yunhsu.github.io/categories/Git/">Git</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/yunhsu.github.io/tags/Git/">Git</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="複習上次"><a href="#複習上次" class="headerlink" title="複習上次"></a>複習上次</h2><p>git init → git add . → git commit -m”write your commit”</p>
+<p>git status 查資料狀態</p>
+<p>建 GitHub repository remote 到本地端資料夾<br>如果想確認是否有連接到遠端資料夾，可以開啟 config 檔查看是否有 remote</p>
+<h2 id="常用環境設定"><a href="#常用環境設定" class="headerlink" title="常用環境設定"></a>常用環境設定</h2><p>縮寫篇</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global alias.co checkout</span><br><span class="line">$ git config --global alias.br branch</span><br><span class="line">$ git config --global alias.st status</span><br><span class="line">$ git config --global alias.ci commit</span><br></pre></td></tr></table></figure>
+
+<p>觀看所有 config 設定<br>Win：C:\Users$USER</p>
+<h2 id="熱門遠端儲存庫-Github-VS-Bitbucket-VS-Gitlab"><a href="#熱門遠端儲存庫-Github-VS-Bitbucket-VS-Gitlab" class="headerlink" title="熱門遠端儲存庫(Github VS Bitbucket VS Gitlab)"></a>熱門遠端儲存庫(Github VS Bitbucket VS Gitlab)</h2><ul>
+<li><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>：擁有 GitHub Pages 功能，可擁有私人數據庫，免費方案是 3 人以下</li>
+<li><a href="https://bitbucket.org/product/pricing" target="_blank" rel="noopener">Bitbucket</a>：可擁有私人數據庫，免費方案是五人以下團隊</li>
+<li><a href="https://about.gitlab.com/" target="_blank" rel="noopener">GitLab</a>：自架 Git 伺服器，有提供 web 視覺化管理介面，常用於企業內部開發</li>
+</ul>
+<h2 id="遠端儲存庫-Repository-操作"><a href="#遠端儲存庫-Repository-操作" class="headerlink" title="遠端儲存庫(Repository)操作"></a>遠端儲存庫(Repository)操作</h2><ul>
+<li><p>註冊遠端儲存庫：git remote add origin 遠端儲存庫網址</p>
+</li>
+<li><p>更新資料到遠端 master 分支：git push -u origin master</p>
+</li>
+<li><p>-u 是指他預設會推到哪個遠端數據庫服務</p>
+</li>
+<li><p>origin 可以改它的遠端數據庫名稱，例如 <em>git push -u github master</em></p>
+</li>
+</ul>
+<p>origin 是預設遠端數據庫名稱，所以你可以做更改<br>開了一個遠端數據庫之後，可以在裡面新增另一個數據庫，要記得名稱不要重複即可</p>
+<p>開多個遠端數據庫是為了可能有個數據庫是主要正式主機(已上線)，另一個為測試用數據庫、或是開發用</p>
+<p>本地端開發 → push 到測試用數據庫 (git push git2 master) → code review 以及測試後沒問題才會部屬到正式上線主機</p>
+<p>剛開始的 branch 是預設叫做 master</p>
+<h2 id="Git-版本細節"><a href="#Git-版本細節" class="headerlink" title="Git 版本細節"></a>Git 版本細節</h2><ul>
+<li>branch ：分支，預設分支叫做 master</li>
+<li>HEAD：指標 (現在位置)</li>
+<li>origin：預設遠端儲存庫名稱</li>
+<li>回頭觀看版本內容：git checkout 編號</li>
+<li>返回最新的版本：git checkout master(分支名稱)</li>
+</ul>
+<p>可以用 git log 查看 commit 歷史紀錄<br>版本編號只要打前幾碼 + tab 就可以補齊版本編號 (git checkout 版本編號)<br>或是直接在 source tree 上面看</p>
+<p>也可以在本地端的資料庫點進半透明的 .git 資料庫的 refs 去看</p>
+<h2 id="還原技巧"><a href="#還原技巧" class="headerlink" title="還原技巧"></a>還原技巧</h2><p><img src="https://quip.com/-/blob/CWIAAAgYWgU/FCUv6ZFUeX3MstfMhB4EEA?s=GL4gAFIc2KdI" alt></p>
+<ul>
+<li>顯示此次清除的檔案：git clean -n</li>
+<li>強制清除檔案：git clean -f </li>
+</ul>
+<p><em>檔案已加入追蹤，清空工作目錄</em></p>
+<ul>
+<li>還原工作目錄上已更改的檔案 ：git checkout – <file></file></li>
+</ul>
+<p><em>檔案加入到索引，退到工作目錄</em></p>
+<ul>
+<li>加入索引的檔案還原到工作目錄：git reset HEAD</li>
+</ul>
+<p>版本還原</p>
+<ul>
+<li>還原前兩個版本：git reset HEAD^^</li>
+<li>還原前兩個版本，所有更新檔案都放棄：git reset HEAD^^ –hard</li>
+<li>觀看詳細歷史紀錄：git reflog</li>
+<li>還原到特定 commit：git reset commit編號 –hard</li>
+<li>git reset 參數介紹 (<a href="https://gitbook.tw/chapters/using-git/reset-commit.html" target="_blank" rel="noopener">https://gitbook.tw/chapters/using-git/reset-commit.html</a>)</li>
+</ul>
+<h2 id="資料來源"><a href="#資料來源" class="headerlink" title="資料來源"></a>資料來源</h2><p>六角學院<br><a href="https://youtu.be/h8HxR9GDtJU" target="_blank" rel="noopener">影片</a><br><a href="https://quip.com/GL4gAFIc2KdI" target="_blank" rel="noopener">共筆文件</a></p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/yunhsu.github.io/">Home</a></li>
+         
+          <li><a href="/yunhsu.github.io/about/">About</a></li>
+         
+          <li><a href="/yunhsu.github.io/archives/">Writing</a></li>
+         
+          <li><a href="/yunhsu.github.io/tags/">tags</a></li>
+         
+          <li><a href="/yunhsu.github.io/categories/">categories</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#複習上次"><span class="toc-number">1.</span> <span class="toc-text">複習上次</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用環境設定"><span class="toc-number">2.</span> <span class="toc-text">常用環境設定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#熱門遠端儲存庫-Github-VS-Bitbucket-VS-Gitlab"><span class="toc-number">3.</span> <span class="toc-text">熱門遠端儲存庫(Github VS Bitbucket VS Gitlab)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遠端儲存庫-Repository-操作"><span class="toc-number">4.</span> <span class="toc-text">遠端儲存庫(Repository)操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-版本細節"><span class="toc-number">5.</span> <span class="toc-text">Git 版本細節</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#還原技巧"><span class="toc-number">6.</span> <span class="toc-text">還原技巧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#資料來源"><span class="toc-number">7.</span> <span class="toc-text">資料來源</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/&text=Git2- 常用指令(Repository 操作)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/&title=Git2- 常用指令(Repository 操作)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/&is_video=false&description=Git2- 常用指令(Repository 操作)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git2- 常用指令(Repository 操作)&body=Check out this article: https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/&title=Git2- 常用指令(Repository 操作)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/&title=Git2- 常用指令(Repository 操作)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/&title=Git2- 常用指令(Repository 操作)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/&title=Git2- 常用指令(Repository 操作)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/14/Git2-常用指令-Repository-操作/&name=Git2- 常用指令(Repository 操作)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Yun Hsu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/yunhsu.github.io/">Home</a></li>
+         
+          <li><a href="/yunhsu.github.io/about/">About</a></li>
+         
+          <li><a href="/yunhsu.github.io/archives/">Writing</a></li>
+         
+          <li><a href="/yunhsu.github.io/tags/">tags</a></li>
+         
+          <li><a href="/yunhsu.github.io/categories/">categories</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/yunhsu.github.io/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/yunhsu.github.io/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/yunhsu.github.io/lib/jquery/jquery.min.js"></script>
+<script src="/yunhsu.github.io/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/yunhsu.github.io/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/yunhsu.github.io/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'yunhsu';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>

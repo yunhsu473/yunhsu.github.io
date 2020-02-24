@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="用處? search replace  validate reformat  好處? 語法精簡 速度快 各種工具支援  普通字元/a/This is an apple. /is/This is an apple. 特殊字元 (前面須加反斜線 \ )/if \ ( true/if (true ){do something} /1 \ + 2=3/1+2=3 任意字元 (以 . 來表示任何字都可以)/">
+<meta name="keywords" content="other">
+<meta property="og:type" content="article">
+<meta property="og:title" content="淺談 Regular Expression 正規表達式">
+<meta property="og:url" content="https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/index.html">
+<meta property="og:site_name" content="Yun&#39;s Blog">
+<meta property="og:description" content="用處? search replace  validate reformat  好處? 語法精簡 速度快 各種工具支援  普通字元/a/This is an apple. /is/This is an apple. 特殊字元 (前面須加反斜線 \ )/if \ ( true/if (true ){do something} /1 \ + 2=3/1+2=3 任意字元 (以 . 來表示任何字都可以)/">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-02-24T08:22:30.498Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="淺談 Regular Expression 正規表達式">
+<meta name="twitter:description" content="用處? search replace  validate reformat  好處? 語法精簡 速度快 各種工具支援  普通字元/a/This is an apple. /is/This is an apple. 特殊字元 (前面須加反斜線 \ )/if \ ( true/if (true ){do something} /1 \ + 2=3/1+2=3 任意字元 (以 . 來表示任何字都可以)/">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/yunhsu.github.io/images/title.JPG">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/yunhsu.github.io/images/title.JPG" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/yunhsu.github.io/images/title.JPG">
+          
+        
+    
+    <!-- title -->
+    <title>淺談 Regular Expression 正規表達式</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/yunhsu.github.io/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/yunhsu.github.io/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/yunhsu.github.io/">Home</a></li>
+         
+          <li><a href="/yunhsu.github.io/about/">About</a></li>
+         
+          <li><a href="/yunhsu.github.io/archives/">Writing</a></li>
+         
+          <li><a href="/yunhsu.github.io/tags/">tags</a></li>
+         
+          <li><a href="/yunhsu.github.io/categories/">categories</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/yunhsu.github.io/2020/01/22/Git3-分支/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/&text=淺談 Regular Expression 正規表達式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/&title=淺談 Regular Expression 正規表達式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/&is_video=false&description=淺談 Regular Expression 正規表達式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=淺談 Regular Expression 正規表達式&body=Check out this article: https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/&title=淺談 Regular Expression 正規表達式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/&title=淺談 Regular Expression 正規表達式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/&title=淺談 Regular Expression 正規表達式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/&title=淺談 Regular Expression 正規表達式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/&name=淺談 Regular Expression 正規表達式&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#用處"><span class="toc-number">1.</span> <span class="toc-text">用處?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#好處"><span class="toc-number">2.</span> <span class="toc-text">好處?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#普通字元"><span class="toc-number">3.</span> <span class="toc-text">普通字元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特殊字元-前面須加反斜線"><span class="toc-number">4.</span> <span class="toc-text">特殊字元 (前面須加反斜線 \ )</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#任意字元-以-來表示任何字都可以"><span class="toc-number">5.</span> <span class="toc-text">任意字元 (以 . 來表示任何字都可以)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多個字元"><span class="toc-number">6.</span> <span class="toc-text">多個字元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多個字元縮寫"><span class="toc-number">7.</span> <span class="toc-text">多個字元縮寫</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#d-→-digit-0-9"><span class="toc-number">7.1.</span> <span class="toc-text">\d → digit /[0-9]/</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#w-→-word-A-Za-z0-9"><span class="toc-number">7.2.</span> <span class="toc-text">\w → word /[A-Za-z0-9_]/</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#s-→-space-n-r-t"><span class="toc-number">7.3.</span> <span class="toc-text">\s → space /[ \n\r\t]/</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#D-→-non-digit-d"><span class="toc-number">7.4.</span> <span class="toc-text">\D → non-digit /[^\d]/</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#W-→-non-word-w"><span class="toc-number">7.5.</span> <span class="toc-text">\W → non-word /[^\w]/</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-→-non-space-s"><span class="toc-number">7.6.</span> <span class="toc-text">\S → non-space /[^\s]/</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#出現次數"><span class="toc-number">8.</span> <span class="toc-text">出現次數</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#→-任意次數"><span class="toc-number">8.1.</span> <span class="toc-text">*→ 任意次數</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#→-至少一次"><span class="toc-number">8.2.</span> <span class="toc-text">+→ 至少一次</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#→-零或一次"><span class="toc-number">8.3.</span> <span class="toc-text">?→ 零或一次</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#花括系列"><span class="toc-number">8.4.</span> <span class="toc-text">{花括系列}</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#次數"><span class="toc-number">8.4.1.</span> <span class="toc-text">{次數}</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#最少次數-最多次數"><span class="toc-number">8.4.2.</span> <span class="toc-text">{最少次數, 最多次數}</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#頭尾"><span class="toc-number">9.</span> <span class="toc-text">頭尾</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#→-開頭"><span class="toc-number">9.1.</span> <span class="toc-text">^ → 開頭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#→-結尾"><span class="toc-number">9.2.</span> <span class="toc-text">$ → 結尾</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#或"><span class="toc-number">10.</span> <span class="toc-text">或</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用例子"><span class="toc-number">11.</span> <span class="toc-text">常用例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#西元生日"><span class="toc-number">11.1.</span> <span class="toc-text">西元生日</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#身分證字號"><span class="toc-number">11.2.</span> <span class="toc-text">身分證字號</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gmail-信箱"><span class="toc-number">11.3.</span> <span class="toc-text">gmail 信箱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四則運算式"><span class="toc-number">11.4.</span> <span class="toc-text">四則運算式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完全符合，而不是涵蓋的字詞"><span class="toc-number">12.</span> <span class="toc-text">完全符合，而不是涵蓋的字詞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不完全符合列出完整單詞"><span class="toc-number">13.</span> <span class="toc-text">不完全符合列出完整單詞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字串取代"><span class="toc-number">14.</span> <span class="toc-text">字串取代</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#g-搜尋全部結果"><span class="toc-number">15.</span> <span class="toc-text">g - 搜尋全部結果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#i-不區分大小寫"><span class="toc-number">16.</span> <span class="toc-text">i - 不區分大小寫</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#選取"><span class="toc-number">17.</span> <span class="toc-text">選取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子"><span class="toc-number">18.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在-VSCode-中使用-regex-取代字串"><span class="toc-number">19.</span> <span class="toc-text">在 VSCode 中使用 regex 取代字串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#資料來源："><span class="toc-number">20.</span> <span class="toc-text">資料來源：</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        淺談 Regular Expression 正規表達式
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Yun's Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-01-29T16:00:00.000Z" itemprop="datePublished">2020-01-30</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/yunhsu.github.io/categories/other/">other</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/yunhsu.github.io/tags/other/">other</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="用處"><a href="#用處" class="headerlink" title="用處?"></a>用處?</h2><ul>
+<li>search</li>
+<li>replace </li>
+<li>validate</li>
+<li>reformat</li>
+</ul>
+<h2 id="好處"><a href="#好處" class="headerlink" title="好處?"></a>好處?</h2><ul>
+<li>語法精簡</li>
+<li>速度快</li>
+<li>各種工具支援</li>
+</ul>
+<h2 id="普通字元"><a href="#普通字元" class="headerlink" title="普通字元"></a>普通字元</h2><p>/a/<br>This is <strong>a</strong>n <strong>a</strong>pple.</p>
+<p>/is/<br>Th<strong>is</strong> <strong>is</strong> an apple.</p>
+<h2 id="特殊字元-前面須加反斜線"><a href="#特殊字元-前面須加反斜線" class="headerlink" title="特殊字元 (前面須加反斜線 \ )"></a>特殊字元 (前面須加反斜線 \ )</h2><p>/if \ ( true/<br><strong>if (true</strong> ){do something}</p>
+<p>/1 \ + 2=3/<br><strong>1+2=3</strong></p>
+<h2 id="任意字元-以-來表示任何字都可以"><a href="#任意字元-以-來表示任何字都可以" class="headerlink" title="任意字元 (以 . 來表示任何字都可以)"></a>任意字元 (以 . 來表示任何字都可以)</h2><p>/a.man/<br>I am <strong>a man</strong>.</p>
+<p>/.a/<br>A <strong>banana</strong>.</p>
+<h2 id="多個字元"><a href="#多個字元" class="headerlink" title="多個字元"></a>多個字元</h2><p>/[aA]/<br><strong>A</strong>n <strong>a</strong>pple</p>
+<p>/[aeiou]/<br>Th<strong>e</strong>r<strong>e</strong> <strong>i</strong>s <strong>a</strong> d<strong>o</strong>g.</p>
+<p>/[a-z]/<br>T<strong>here is a dog</strong>.</p>
+<p>/[A-Za-z]/<br><strong>I</strong>‘<strong>m</strong> 25 <strong>years</strong>-<strong>old</strong>.</p>
+<p>/[^a]/ (選不是 a 的字元)<br><strong>This is</strong> a<strong>n</strong> a<strong>pple.</strong></p>
+<h2 id="多個字元縮寫"><a href="#多個字元縮寫" class="headerlink" title="多個字元縮寫"></a>多個字元縮寫</h2><h3 id="d-→-digit-0-9"><a href="#d-→-digit-0-9" class="headerlink" title="\d → digit /[0-9]/"></a>\d → digit /[0-9]/</h3><h3 id="w-→-word-A-Za-z0-9"><a href="#w-→-word-A-Za-z0-9" class="headerlink" title="\w → word /[A-Za-z0-9_]/"></a>\w → word /[A-Za-z0-9_]/</h3><h3 id="s-→-space-n-r-t"><a href="#s-→-space-n-r-t" class="headerlink" title="\s → space /[ \n\r\t]/"></a>\s → space /[ \n\r\t]/</h3><p>/[\we]/<br>T<strong>here</strong> is an app<strong>le</strong>.</p>
+<p>/[\d\d]/<br>I’m <strong>20</strong> years-okld.</p>
+<p>前面的反對派</p>
+<h3 id="D-→-non-digit-d"><a href="#D-→-non-digit-d" class="headerlink" title="\D → non-digit /[^\d]/"></a>\D → non-digit /[^\d]/</h3><h3 id="W-→-non-word-w"><a href="#W-→-non-word-w" class="headerlink" title="\W → non-word /[^\w]/"></a>\W → non-word /[^\w]/</h3><h3 id="S-→-non-space-s"><a href="#S-→-non-space-s" class="headerlink" title="\S → non-space /[^\s]/"></a>\S → non-space /[^\s]/</h3><p>/\D/<br>1 <strong>+</strong> 2 <strong>=</strong> 3</p>
+<h2 id="出現次數"><a href="#出現次數" class="headerlink" title="出現次數"></a>出現次數</h2><h3 id="→-任意次數"><a href="#→-任意次數" class="headerlink" title="*→ 任意次數"></a>*→ 任意次數</h3><h3 id="→-至少一次"><a href="#→-至少一次" class="headerlink" title="+→ 至少一次"></a>+→ 至少一次</h3><h3 id="→-零或一次"><a href="#→-零或一次" class="headerlink" title="?→ 零或一次"></a>?→ 零或一次</h3><p>/l<em>/<br>He*</em>ll<strong>o Wor</strong>l**d</p>
+<p>/n?a/<br>b<strong>anana</strong></p>
+<h3 id="花括系列"><a href="#花括系列" class="headerlink" title="{花括系列}"></a>{花括系列}</h3><h4 id="次數"><a href="#次數" class="headerlink" title="{次數}"></a>{次數}</h4><h4 id="最少次數-最多次數"><a href="#最少次數-最多次數" class="headerlink" title="{最少次數, 最多次數}"></a>{最少次數, 最多次數}</h4><p>/l{2}/<br>He<strong>ll</strong>o World</p>
+<p>/l{1,}/<br>He<strong>ll</strong>o Wor<strong>l</strong>d</p>
+<h2 id="頭尾"><a href="#頭尾" class="headerlink" title="頭尾"></a>頭尾</h2><h3 id="→-開頭"><a href="#→-開頭" class="headerlink" title="^ → 開頭"></a>^ → 開頭</h3><h3 id="→-結尾"><a href="#→-結尾" class="headerlink" title="$ → 結尾"></a>$ → 結尾</h3><p>/^He/<br><strong>He</strong>llo Hello</p>
+<p>/llo$/<br>Hello He<strong>llo</strong></p>
+<p>/^He.<em>llo$/<br>*</em>Hello Hello**</p>
+<h2 id="或"><a href="#或" class="headerlink" title="或"></a>或</h2><p>(如果已滿足前面條件則不會再往下確認是否更加滿足接下來的條件)</p>
+<p>/and|android/<br>iOS <strong>and</strong> <strong>and</strong>roid<br>(在這個例子中，因為後面的 android 已經符合 and 的條件，所以被搜尋出的就會是符合 and 而不是 android 的部分)</p>
+<p>/android|and/<br>iOS <strong>and</strong> <strong>android</strong><br>(因為 android 寫在前面，所以如果先符合 android 的就會先找出來，如果沒有就再配看看是不是 and)</p>
+<h2 id="常用例子"><a href="#常用例子" class="headerlink" title="常用例子"></a>常用例子</h2><h3 id="西元生日"><a href="#西元生日" class="headerlink" title="西元生日"></a>西元生日</h3><p>/^[1-9]\d{3}-\d{2}-\d{2}$/<br>1983-08-21</p>
+<h3 id="身分證字號"><a href="#身分證字號" class="headerlink" title="身分證字號"></a>身分證字號</h3><p>/^[A-Z]\d{9}$/<br>A123456789</p>
+<h3 id="gmail-信箱"><a href="#gmail-信箱" class="headerlink" title="gmail 信箱"></a>gmail 信箱</h3><p>/^\w+@gmail\.com$/<br><a href="mailto:test@gmail.com" target="_blank" rel="noopener">test@gmail.com</a></p>
+<h3 id="四則運算式"><a href="#四則運算式" class="headerlink" title="四則運算式"></a>四則運算式</h3><p>/^[\d\+\-\<em>\/]\</em>$/<br>1+3/2-1</p>
+<h2 id="完全符合，而不是涵蓋的字詞"><a href="#完全符合，而不是涵蓋的字詞" class="headerlink" title="完全符合，而不是涵蓋的字詞"></a>完全符合，而不是涵蓋的字詞</h2><p>例如<br>This is a pen.<br>在上面這句中只想挑出 “is”，但如果使用 /is/ 的話也會挑出 This 的 is<br>那如果要限定，則使用 \b → 限定 is 使用/\bis\b/</p>
+<h2 id="不完全符合列出完整單詞"><a href="#不完全符合列出完整單詞" class="headerlink" title="不完全符合列出完整單詞"></a>不完全符合列出完整單詞</h2><p>只要有符合條件的，就整個字都拿出來，而不是像搜尋 is 就只拿出 This 的 “is”，而是拿出 “This”<br>這時可以在你的關鍵字左右都加上 \S* 或 \w*<br>用 /\S*is\S*/ 或是 /\w*is\w*/ 去配對 this is a pen.<br>結果為 [“this”, “is”]</p>
+<h2 id="字串取代"><a href="#字串取代" class="headerlink" title="字串取代"></a>字串取代</h2><p>取代時，如果沒有特別設定，那只會 match 到第一個就不會繼續往下搜尋</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'banana'</span>.replace(<span class="regexp">/na/</span>, <span class="string">'NA'</span>) <span class="comment">//'baNAna'</span></span><br></pre></td></tr></table></figure>
+
+<p>不管 n 後面字元是甚麼都替換成 ‘NA’</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'banana'</span>.replace(<span class="regexp">/n./</span>, <span class="string">'NA'</span>) <span class="comment">//'baNAna'</span></span><br></pre></td></tr></table></figure>
+
+<p>n 後面任意字元任意字都被替換成 ‘NA’</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'banana'</span>.replace(<span class="regexp">/n.*/</span>, <span class="string">'NA'</span>) <span class="comment">//'baNA'</span></span><br></pre></td></tr></table></figure>
+
+<p>regular expression 的大小寫是完全不同的東西，只寫大寫的 NA 就只會 match 到大寫的 NA，並不會 match 到小寫的 na</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'baNAna'</span>.replace(<span class="regexp">/NA/</span>, <span class="string">'na'</span>) <span class="comment">//'banana'</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="g-搜尋全部結果"><a href="#g-搜尋全部結果" class="headerlink" title="g - 搜尋全部結果"></a>g - 搜尋全部結果</h2><p>就是 global 的意思，搜尋全部的結果，而不是只 match 到第一個就停止</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'banana'</span>.replace(<span class="regexp">/na/g</span>, <span class="string">'NA'</span>) <span class="comment">//'baNANA'</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="i-不區分大小寫"><a href="#i-不區分大小寫" class="headerlink" title="i - 不區分大小寫"></a>i - 不區分大小寫</h2><p>變成 case-insensitive (不區分大小寫)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'baNanA'</span>.replace(<span class="regexp">/na/gi</span>, <span class="string">'NA'</span>) <span class="comment">//'baNANA'</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="選取"><a href="#選取" class="headerlink" title="選取"></a>選取</h2><p>用括號來將 match 到的元素放入變數</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'apple'</span>.match(<span class="regexp">/(a.)(p.)e/</span>)</span><br><span class="line"><span class="comment">// $1 = 'ap'</span></span><br><span class="line"><span class="comment">// $2 = 'pl'</span></span><br><span class="line"></span><br><span class="line"><span class="string">'apple'</span>.replace(<span class="regexp">/(a.)(p.)e/</span>, <span class="string">'$1$2'</span>) <span class="comment">// 'appl'</span></span><br><span class="line"><span class="string">'apple'</span>.replace(<span class="regexp">/(a.)(p.)e/</span>, <span class="string">'$1$1'</span>) <span class="comment">// 'apap'</span></span><br></pre></td></tr></table></figure>
+
+<p>如果搜尋到的元素不只一個即將它放入 array (需搭配 global 使用)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'banana'</span>.match(<span class="regexp">/(.)(a)/g</span>)</span><br><span class="line"><span class="comment">// $1 = ['b', 'n', 'n']</span></span><br><span class="line"><span class="comment">// $2 = ['a', 'a', 'a']</span></span><br><span class="line"></span><br><span class="line"><span class="string">'banana'</span>.replace(<span class="regexp">/(.)(a)/g</span>, <span class="string">'$1$2'</span>) <span class="comment">// 'banana'</span></span><br><span class="line"><span class="string">'banana'</span>.replace(<span class="regexp">/(.)(a)/g</span>, <span class="string">'$1'</span>) <span class="comment">// 'bnn'</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'2019/02/19'</span>.match(<span class="regexp">/(.*)\/(.*)\/(.*)/</span>)</span><br><span class="line"><span class="comment">// [2019/02/19, '2019', '02', '19']</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">JSON</span>.parse(<span class="string">'2019/02/19'</span>.replace(<span class="regexp">/(.*)\/(.*)\/(.*)/</span>, <span class="string">'&#123; "year": "$1", "month": "$2", "day": "$3"&#125;'</span></span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"><span class="comment">// &#123;year: "2019", month: "02", day: "19"&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="在-VSCode-中使用-regex-取代字串"><a href="#在-VSCode-中使用-regex-取代字串" class="headerlink" title="在 VSCode 中使用 regex 取代字串"></a>在 VSCode 中使用 regex 取代字串</h2><p>要記得打開搜尋器右上角的 [Use Regular Expression]</p>
+<p>例1<br>現在有三個 email 那我們要如何將全部選取?<br><a href="mailto:test@gmail.com" target="_blank" rel="noopener">test@gmail.com</a><br><a href="mailto:hi@yahoo.com.tw" target="_blank" rel="noopener">hi@yahoo.com.tw</a><br><a href="mailto:wohoo@gmail.com" target="_blank" rel="noopener">wohoo@gmail.com</a></p>
+<p>切成四部分：(@ 前面的帳號部分)(@)(在第一個 . 前面的東西但不包含 .)(剩下的東西)<br>寫出來就會長這樣： (.<em>)(@)[[^\.]*](.\</em>)<br>[[^\.]*] → 不要點的任意字元</p>
+<p>replace 的話，如果只想將前面帳號部分取代就可以打</p>
+<p>ohyaaa$2$3$4</p>
+<p>就會變成</p>
+<p><a href="mailto:ohyaaa@gmail.com" target="_blank" rel="noopener">ohyaaa@gmail.com</a><br><a href="mailto:ohyaaa@yahoo.com.tw" target="_blank" rel="noopener">ohyaaa@yahoo.com.tw</a><br><a href="mailto:ohyaaa@gmail.com" target="_blank" rel="noopener">ohyaaa@gmail.com</a></p>
+<p>例2<br>現在有 HTML tag，想將 &lt;div&gt;&lt;/div&gt; 通通改成 &lt;span&gt;&lt;/span&gt;</p>
+<p>可以拆成三部分：(&lt; 或是 &lt;/)(div)(&gt;)<br>寫成：(&lt;\/?)(div)(&gt;)</p>
+<p>替換 $1span$3<br>就會變成<br>&lt;span&gt;&lt;/span&gt;</p>
+<h2 id="資料來源："><a href="#資料來源：" class="headerlink" title="資料來源："></a>資料來源：</h2><p><a href="https://www.youtube.com/watch?v=xrMH9uMNGt8" target="_blank" rel="noopener">[線上讀書會] 承億 主講 regular expression</a></p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/yunhsu.github.io/">Home</a></li>
+         
+          <li><a href="/yunhsu.github.io/about/">About</a></li>
+         
+          <li><a href="/yunhsu.github.io/archives/">Writing</a></li>
+         
+          <li><a href="/yunhsu.github.io/tags/">tags</a></li>
+         
+          <li><a href="/yunhsu.github.io/categories/">categories</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#用處"><span class="toc-number">1.</span> <span class="toc-text">用處?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#好處"><span class="toc-number">2.</span> <span class="toc-text">好處?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#普通字元"><span class="toc-number">3.</span> <span class="toc-text">普通字元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特殊字元-前面須加反斜線"><span class="toc-number">4.</span> <span class="toc-text">特殊字元 (前面須加反斜線 \ )</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#任意字元-以-來表示任何字都可以"><span class="toc-number">5.</span> <span class="toc-text">任意字元 (以 . 來表示任何字都可以)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多個字元"><span class="toc-number">6.</span> <span class="toc-text">多個字元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多個字元縮寫"><span class="toc-number">7.</span> <span class="toc-text">多個字元縮寫</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#d-→-digit-0-9"><span class="toc-number">7.1.</span> <span class="toc-text">\d → digit /[0-9]/</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#w-→-word-A-Za-z0-9"><span class="toc-number">7.2.</span> <span class="toc-text">\w → word /[A-Za-z0-9_]/</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#s-→-space-n-r-t"><span class="toc-number">7.3.</span> <span class="toc-text">\s → space /[ \n\r\t]/</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#D-→-non-digit-d"><span class="toc-number">7.4.</span> <span class="toc-text">\D → non-digit /[^\d]/</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#W-→-non-word-w"><span class="toc-number">7.5.</span> <span class="toc-text">\W → non-word /[^\w]/</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-→-non-space-s"><span class="toc-number">7.6.</span> <span class="toc-text">\S → non-space /[^\s]/</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#出現次數"><span class="toc-number">8.</span> <span class="toc-text">出現次數</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#→-任意次數"><span class="toc-number">8.1.</span> <span class="toc-text">*→ 任意次數</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#→-至少一次"><span class="toc-number">8.2.</span> <span class="toc-text">+→ 至少一次</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#→-零或一次"><span class="toc-number">8.3.</span> <span class="toc-text">?→ 零或一次</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#花括系列"><span class="toc-number">8.4.</span> <span class="toc-text">{花括系列}</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#次數"><span class="toc-number">8.4.1.</span> <span class="toc-text">{次數}</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#最少次數-最多次數"><span class="toc-number">8.4.2.</span> <span class="toc-text">{最少次數, 最多次數}</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#頭尾"><span class="toc-number">9.</span> <span class="toc-text">頭尾</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#→-開頭"><span class="toc-number">9.1.</span> <span class="toc-text">^ → 開頭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#→-結尾"><span class="toc-number">9.2.</span> <span class="toc-text">$ → 結尾</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#或"><span class="toc-number">10.</span> <span class="toc-text">或</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用例子"><span class="toc-number">11.</span> <span class="toc-text">常用例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#西元生日"><span class="toc-number">11.1.</span> <span class="toc-text">西元生日</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#身分證字號"><span class="toc-number">11.2.</span> <span class="toc-text">身分證字號</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gmail-信箱"><span class="toc-number">11.3.</span> <span class="toc-text">gmail 信箱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四則運算式"><span class="toc-number">11.4.</span> <span class="toc-text">四則運算式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完全符合，而不是涵蓋的字詞"><span class="toc-number">12.</span> <span class="toc-text">完全符合，而不是涵蓋的字詞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不完全符合列出完整單詞"><span class="toc-number">13.</span> <span class="toc-text">不完全符合列出完整單詞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字串取代"><span class="toc-number">14.</span> <span class="toc-text">字串取代</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#g-搜尋全部結果"><span class="toc-number">15.</span> <span class="toc-text">g - 搜尋全部結果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#i-不區分大小寫"><span class="toc-number">16.</span> <span class="toc-text">i - 不區分大小寫</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#選取"><span class="toc-number">17.</span> <span class="toc-text">選取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子"><span class="toc-number">18.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在-VSCode-中使用-regex-取代字串"><span class="toc-number">19.</span> <span class="toc-text">在 VSCode 中使用 regex 取代字串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#資料來源："><span class="toc-number">20.</span> <span class="toc-text">資料來源：</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/&text=淺談 Regular Expression 正規表達式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/&title=淺談 Regular Expression 正規表達式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/&is_video=false&description=淺談 Regular Expression 正規表達式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=淺談 Regular Expression 正規表達式&body=Check out this article: https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/&title=淺談 Regular Expression 正規表達式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/&title=淺談 Regular Expression 正規表達式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/&title=淺談 Regular Expression 正規表達式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/&title=淺談 Regular Expression 正規表達式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://yunhsu473.github.io/yunhsu.github.io/2020/01/30/淺談-Regular-Expression-正規表達式/&name=淺談 Regular Expression 正規表達式&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Yun Hsu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/yunhsu.github.io/">Home</a></li>
+         
+          <li><a href="/yunhsu.github.io/about/">About</a></li>
+         
+          <li><a href="/yunhsu.github.io/archives/">Writing</a></li>
+         
+          <li><a href="/yunhsu.github.io/tags/">tags</a></li>
+         
+          <li><a href="/yunhsu.github.io/categories/">categories</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/yunhsu.github.io/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/yunhsu.github.io/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/yunhsu.github.io/lib/jquery/jquery.min.js"></script>
+<script src="/yunhsu.github.io/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/yunhsu.github.io/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/yunhsu.github.io/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'yunhsu';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>
